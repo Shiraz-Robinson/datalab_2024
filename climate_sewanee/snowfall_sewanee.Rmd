@@ -1,0 +1,38 @@
+---
+title: "Snowfall in Sewanee"
+author: "Shiraz Robinson II"
+date: "2024-06-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Load libraries and dataset
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+setwd("/Users/shirazrobinsonii/Desktop/shiraz_datalab/datalab_2024/climate_sewanee")
+sewanee_weather <- read_csv("sewanee_weather.csv", show_col_types =FALSE)
+```
+
+# 4. How has snowfall changed over time for the entire period?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+snow_year <- sewanee_weather %>% 
+  filter(STATION == 'USC00408184') %>%
+  filter(SNOW > 0) %>% 
+mutate(Year = year(DATE)) %>% 
+  group_by(Year) %>% 
+  summarise(avg_snowfall = mean(SNOW, na.rm = TRUE))
+
+ggplot(snow_year, aes(x =Year, y = avg_snowfall)) + 
+  geom_line(color= 'blue') + labs(title = "Change in Snowfall Over Time", x ='Years', y='Average Snowfall (Inches)')
+```
+
+
