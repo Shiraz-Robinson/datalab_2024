@@ -44,7 +44,9 @@ words <- survey %>%
                 feeling) %>%
   unnest_tokens(word, feeling)
 
-# 11. Look up the help documentation for the function wordcloud2. What does it expect as the first argument of the function? The 1st argument is data.
+# 11. Look up the help documentation for the function wordcloud2. What does it expect as the first argument of the function? 
+
+# The 1st argument is data.
 
 # 12. Create a dataframe named word_freq. This should be a dataframe which is conformant with the expectation of wordcloud2, showing how frequently each word appeared in our feelings.
 
@@ -70,6 +72,42 @@ words <- survey %>%
  
  # 17. Make a new word cloud.
  
- 
  wordcloud2(no_repeat, shape = 'star')
+ 
+ # 18. Make an object with the top 10 words used only. Name this object top10.
+ 
+ top10 <- head(words, 10)
+ 
+ #19. Create a bar chart showing the number of times the top10 words were used.
+ 
+ ggplot(top10, aes(x = word)) + geom_bar()
+ 
+ # 20. Run the below to join word_freq with sentiments.
+ 
+ fusion <- left_join(word_freq, sentiments)
+ 
+ # 21. Now explore the data. What is going on?
+ 
+ # Sentiments and word frequency are attributes of each word within the dataset.
+ 
+ # 22. For the whole survey, were there more negative or positive sentiment words used?
+ 
+ negative_sentiment <- fusion %>% 
+ filter(sentiment == 'negative') %>% 
+ summarise(count = n(), .groups = 'drop')
+   
+ positive_sentiment <- fusion %>% 
+ filter(sentiment == 'positive') %>% 
+ summarise(count = n(), .groups = 'drop')
+ 
+ # 23. Create an object with the number of negative and positive words used for each person.
+ 
+ # 24. In that object, create a new variabled named sentimentality, which is the number of positive words minus the number of negative words.
+  
+ # 25. Make a histogram of senitmentality
+  
+ # 26. Make a barplot of sentimentality.
+  
+ # 27. Create a wordcloud for the dream variable.
+ 
  
